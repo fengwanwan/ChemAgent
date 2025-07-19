@@ -37,7 +37,7 @@ A LangGraph + Streamlit powered intelligent chemistry assistant that helps resea
 
 ```bash
 git clone https://github.com/fengwanwan/ChemAgent.git
-cd chemagent
+cd ChemAgent
 ```
 
 ### 2. Install dependencies
