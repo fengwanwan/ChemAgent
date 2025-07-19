@@ -16,6 +16,7 @@ from PIL import Image
 load_dotenv()
 
 db = 'REAL-Database-22Q1'
+serpapi_key = os.getenv("SERPAPI_KEY")
 
 
 @tool
@@ -167,7 +168,7 @@ async def find_similar_molecules(smiles: str) -> str:
 @tool
 def web_search(query: str) -> str:
     """Performs a web search using SerpAPI for general science or chemistry-related queries."""
-    serpapi_key = os.getenv("SERPAPI_KEY")
+    
     if not serpapi_key:
         return "Error: Missing SERPAPI_KEY."
     params = {"q": query, "api_key": serpapi_key, "engine": "google", "num": 5}
@@ -200,7 +201,6 @@ def _format_patent_results(results: dict) -> str:
 @tool
 def search_patents(query: str) -> str:
     """Searches for patents related to a chemical compound or target using Google Patents via SerpAPI."""
-    serpapi_key = os.getenv("SERPAPI_KEY")
     if not serpapi_key:
         return "Error: SERPAPI_KEY not set."
     

@@ -21,12 +21,14 @@ A LangGraph + Streamlit powered intelligent chemistry assistant that helps resea
 
 ```
 .
-├── app.py              # Streamlit UI
-├── graph.py            # LangGraph agent & memory
-├── tools.py            # All chemistry tools (async)
-├── prompts.py          # System prompt template
-├── requirements.txt    # Python dependencies
-├── .env                # API key template
+├── requirements.txt          # Python dependencies
+├── src/
+│   ├── app.py                # Streamlit UI
+│   ├── graph.py              # LangGraph agent & memory
+│   ├── tools.py              # All chemistry tools (async)
+│   ├── prompts.py            # System prompt template
+│   └── .env                  # API key template
+            
 ```
 
 ## 🛠️ Setup
