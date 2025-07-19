@@ -1,40 +1,40 @@
 # app.py
 
-import streamlit as st
-from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
-from graph import run_agent
-from prompts import SYSTEM_PROMPT
-
-st.set_page_config(page_title="ChemBot", page_icon="🧪")
-st.title("🧪 ChemBot: Chemistry Assistant")
-st.write("Example: *What is the molecular weight of aspirin?*")
-
-
-
-
-
-
 import asyncio
+import streamlit as st
+from langchain_core.messages import HumanMessage, AIMessage
+from graph import run_agent
 
+st.set_page_config(page_title="ChemChatBot", page_icon="🧪")
+st.title("🧪 ChemChatBot: Chemistry Assistant")
+st.write("Ask about molecular weight, logP, or formula. Example: *What is the molecular weight of aspirin?*")
 
+# Session state initialization
+if "messages" not in st.session_state:
+    st.session_state.messages = []
 
+# Display chat history
+for msg in st.session_state.messages:
+    if isinstance(msg, HumanMessage):
+        with st.chat_message("user"):
+            st.markdown(msg.content)
+    elif isinstance(msg, AIMessage):
+        with st.chat_message("assistant"):
+            st.markdown(msg.content)
 
-if "chat_history" not in st.session_state:
-    st.session_state.chat_history = []
-
-user_input = st.chat_input("Ask me about a molecule (e.g., aspirin)")
+# Chat input and response
+user_input = st.chat_input("Ask me something about a molecule...")
 if user_input:
-    st.session_state.chat_history.append(HumanMessage(content=user_input))
+    user_msg = HumanMessage(content=user_input)
+    st.session_state.messages.append(user_msg)
 
-if st.session_state.chat_history:
-    for msg in st.session_state.chat_history:
-        if isinstance(msg, HumanMessage):
-            st.chat_message("user").write(msg.content)
-        elif isinstance(msg, AIMessage):
-            st.chat_message("assistant").write(msg.content)
+    with st.chat_message("user"):
+        st.markdown(user_input)
 
-    async def process():
-        result = await run_agent(st.session_state.chat_history)
-        st.session_state.chat_history.extend(result["messages"][len(st.session_state.chat_history):])
-
-    asyncio.run(process())
+    with st.chat_message("assistant"):
+        with st.spinner("Analyzing..."):
+            result = asyncio.run(run_agent(st.session_state.messages))
+            new_messages = result["messages"][len(st.session_state.messages):]
+            st.session_state.messages.extend(new_messages)
+            for msg in new_messages:
+                st.markdown(msg.content)
