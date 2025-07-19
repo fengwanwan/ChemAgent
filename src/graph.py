@@ -68,6 +68,12 @@ workflow.set_entry_point("agent")
 workflow.set_finish_point("agent")
 app_graph = workflow.compile()
 
+# Limit how many messages are passed back to the agent
+MAX_HISTORY = 8
+
+
 # Wrapper for the Streamlit app
 async def run_agent(messages: list[BaseMessage]) -> AgentState:
-    return await app_graph.ainvoke({"messages": messages})
+    """Invoke the graph with just the latest message history."""
+    history = messages[-MAX_HISTORY:]
+    return await app_graph.ainvoke({"messages": history})

@@ -13,6 +13,11 @@ st.write("Ask about molecular weight, logP, or formula. Example: *What is the mo
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
+# Button to clear the conversation history
+if st.button("Clear Chat"):
+    st.session_state.messages = []
+
+
 # Display chat history
 for msg in st.session_state.messages:
     if isinstance(msg, HumanMessage):
