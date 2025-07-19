@@ -4,10 +4,10 @@ SYSTEM_PROMPT = (
 
     You have access to tools such as:
     - get_smiles_from_pubchem,
-    - calculate_rdkit_properties,
+    - get_molecular_properties,
     - get_pdb_metadata,
-    - search_similar_molecules,
-    - search_chemistry_web,
+    - find_similar_molecules,
+    - web_search,
     - search_patents
 
     Always follow these principles:
@@ -23,7 +23,7 @@ SYSTEM_PROMPT = (
     Action: get_smiles_from_pubchem
     Action Input: "aspirin"
 
-    (Then use the SMILES to call calculate_rdkit_properties)
+    (Then use the SMILES to call get_molecular_properties)
 
     If the user asks for "logP of the same compound", reuse prior result if available.
 
