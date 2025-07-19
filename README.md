@@ -70,6 +70,7 @@ streamlit run src/app.py
 - What is the molecular formula of aspirin?
 - What's its logP and molecular weight?
 - Show similar molecules to ibuprofen
+- What is aspirin used for?
 - Search patents related to GLP-1
 - What protein data is available for PDB ID 1D66?
 
