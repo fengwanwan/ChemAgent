@@ -1,10 +1,11 @@
 import os
-from typing import TypedDict,  Sequence, Annotated
+from typing import List, TypedDict,  Sequence, Annotated
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import BaseMessage
 from langgraph.graph import StateGraph, END
 from langgraph.prebuilt import ToolNode,create_react_agent
 from langchain_core.messages import HumanMessage
+from langgraph.graph.message import add_messages
 from prompts import SYSTEM_PROMPT
 from dotenv import load_dotenv
 
@@ -52,7 +53,7 @@ llm = ChatOpenAI(
 
 # Define the state to be passed around in LangGraph
 class AgentState(TypedDict):
-    messages: Annotated[Sequence[BaseMessage], "Messages exchanged with the user"]
+    messages: Annotated[List[BaseMessage], add_messages]
 
 # Create the ReAct agent with both tools
 agent_node = create_react_agent(
